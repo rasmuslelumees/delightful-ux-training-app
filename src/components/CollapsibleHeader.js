@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
     color: '#131313',
     padding: 16,
     fontSize: 20,
+    fontWeight: '600',
   },
   imageContainer: {
     position: 'absolute',

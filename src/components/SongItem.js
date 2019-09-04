@@ -55,23 +55,27 @@ const styles = StyleSheet.create({
   song: {
     flex: 1,
     width: '100%',
-    backgroundColor: '#FFF',
+    backgroundColor: '#fff',
     justifyContent: 'space-between',
     alignItems: 'center',
     flexDirection: 'row',
+    borderBottomWidth: 1,
+    borderBottomColor: '#f7fafc',
   },
   title: {
     flex: 1,
     paddingHorizontal: 10,
   },
   innerContainer: {
-    margin: 10,
+    marginVertical: 10,
+    marginHorizontal: 16,
     flexDirection: 'row',
     alignItems: 'center',
     overflow: 'hidden',
   },
   titleText: {
     color: '#131313',
+    fontWeight: '500',
   },
   subtitleText: {
     color: '#333',

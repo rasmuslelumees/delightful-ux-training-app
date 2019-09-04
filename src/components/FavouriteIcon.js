@@ -6,7 +6,7 @@ import { runAnimationTiming } from '../utils/animationHelpers';
 
 const { Value, Clock } = Animated;
 
-const DEFAULT_BUTTON_OPACITY = 0.2;
+const DEFAULT_BUTTON_OPACITY = 0.1;
 
 class FavouriteIcon extends React.Component {
   clock = new Clock();
@@ -21,7 +21,7 @@ class FavouriteIcon extends React.Component {
 
   componentDidUpdate(prevProps) {
     if (prevProps.checked !== this.props.checked) {
-      this.toValue.setValue(this.props.checked ? 1 : 0.2);
+      this.toValue.setValue(this.props.checked ? 1 : DEFAULT_BUTTON_OPACITY);
     }
   }
 
