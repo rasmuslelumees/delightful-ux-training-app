@@ -12,6 +12,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 
 import ScreensToggleIcon from '../components/ScreensToggleIcon';
+import { withTheme } from '../utils/theming';
 
 class Login extends React.Component {
   state = {
@@ -30,19 +31,26 @@ class Login extends React.Component {
     }));
 
   render() {
-    const { onLoginScreenToggle } = this.props;
+    const { onLoginScreenToggle, theme } = this.props;
+    const styles = computeStyles(theme);
+    const isLightTheme = theme.name === 'light';
     return (
       <View style={styles.container}>
         <ScreensToggleIcon
-          color={'#131313'}
+          style={styles.toggleIcon}
+          color={theme.primaryTextColor}
           onPress={onLoginScreenToggle}
           shouldClose
         />
-        <StatusBar barStyle={'dark-content'} />
+        <StatusBar barStyle={isLightTheme ? 'dark-content' : 'light-content'} />
         <Text style={styles.header}>Nice to see you!</Text>
         <View style={styles.inputGroup}>
           <View style={[styles.row, styles.inputRow]}>
-            <Ionicons name="md-person" size={26} color={'#131313'} />
+            <Ionicons
+              name="md-person"
+              size={26}
+              color={theme.primaryTextColor}
+            />
             <TextInput
               style={styles.input}
               onChangeText={this.setEmail}
@@ -50,11 +58,11 @@ class Login extends React.Component {
               autoCapitalize="none"
               keyboardType="email-address"
               placeholder="e-mail"
-              placeholderTextColor={'#131313'}
+              placeholderTextColor={theme.primaryTextColor}
             />
           </View>
           <View style={[styles.row, styles.inputRow]}>
-            <Ionicons name="md-lock" size={26} color={'#131313'} />
+            <Ionicons name="md-lock" size={26} color={theme.primaryTextColor} />
             <TextInput
               style={styles.input}
               onChangeText={this.setPassword}
@@ -62,7 +70,7 @@ class Login extends React.Component {
               returnKeyType="go"
               autoCapitalize="none"
               placeholder="password"
-              placeholderTextColor={'#131313'}
+              placeholderTextColor={theme.primaryTextColor}
               secureTextEntry
             />
           </View>
@@ -72,7 +80,7 @@ class Login extends React.Component {
               onValueChange={this.toggleSwitch}
               trackColor={{
                 false: '#f5f9ff',
-                true: '#3903fc',
+                true: theme.accentColor,
               }}
             />
             <Text style={styles.toggleLabel}>Remember me</Text>
@@ -83,7 +91,7 @@ class Login extends React.Component {
               onValueChange={this.props.onToggleDarkMode}
               trackColor={{
                 false: '#f5f9ff',
-                true: '#3903fc',
+                true: theme.accentColor,
               }}
             />
             <Text style={styles.toggleLabel}>Dark mode</Text>
@@ -92,7 +100,11 @@ class Login extends React.Component {
         <TouchableHighlight style={styles.button}>
           <View style={styles.row}>
             <Text style={styles.buttonText}>Login</Text>
-            <Ionicons name="md-arrow-forward" size={16} color={'#FFF'} />
+            <Ionicons
+              name="md-arrow-forward"
+              size={16}
+              color={theme.backgroundColor}
+            />
           </View>
         </TouchableHighlight>
       </View>
@@ -100,64 +112,69 @@ class Login extends React.Component {
   }
 }
 
-export default Login;
+export default withTheme(Login);
 
-const styles = StyleSheet.create({
-  container: {
-    position: 'absolute',
-    top: 0,
-    right: 0,
-    bottom: 0,
-    left: 0,
-    zIndex: 999999,
-    paddingTop: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight,
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingHorizontal: 10,
-    backgroundColor: '#FFF',
-    elevation: 18,
-  },
-  header: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    color: '#131313',
-  },
-  inputGroup: {
-    alignItems: 'stretch',
-    width: '100%',
-    marginBottom: 20,
-  },
-  row: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    margin: 10,
-  },
-  inputRow: {
-    borderBottomWidth: 2,
-    borderBottomColor: '#131313',
-    justifyContent: 'space-between',
-  },
-  input: {
-    height: 40,
-    flex: 0.9,
-    fontSize: 16,
-    color: '#131313',
-    paddingVertical: 10,
-    textAlign: 'left',
-  },
-  button: {
-    backgroundColor: '#3903fc',
-    borderRadius: 25,
-    padding: 5,
-  },
-  buttonText: {
-    color: '#FFF',
-    fontSize: 16,
-    textTransform: 'uppercase',
-    marginRight: 10,
-  },
-  toggleLabel: {
-    marginLeft: 10,
-    color: '#131313',
-  },
-});
+/* eslint-disable react-native/no-unused-styles */
+const computeStyles = theme =>
+  StyleSheet.create({
+    container: {
+      position: 'absolute',
+      top: 0,
+      right: 0,
+      bottom: 0,
+      left: 0,
+      zIndex: 999999,
+      paddingTop: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight,
+      alignItems: 'center',
+      justifyContent: 'center',
+      paddingHorizontal: 10,
+      backgroundColor: theme.backgroundColor,
+      elevation: 18,
+    },
+    header: {
+      fontSize: 20,
+      fontWeight: 'bold',
+      color: theme.primaryTextColor,
+    },
+    inputGroup: {
+      alignItems: 'stretch',
+      width: '100%',
+      marginBottom: 20,
+    },
+    row: {
+      flexDirection: 'row',
+      alignItems: 'center',
+      margin: 10,
+    },
+    inputRow: {
+      borderBottomWidth: 2,
+      borderBottomColor: theme.primaryTextColor,
+      justifyContent: 'space-between',
+    },
+    input: {
+      height: 40,
+      flex: 0.9,
+      fontSize: 16,
+      color: theme.primaryTextColor,
+      paddingVertical: 10,
+      textAlign: 'left',
+    },
+    button: {
+      backgroundColor: theme.accentColor,
+      borderRadius: 25,
+      padding: 5,
+    },
+    buttonText: {
+      color: theme.backgroundColor,
+      fontSize: 16,
+      textTransform: 'uppercase',
+      marginRight: 10,
+    },
+    toggleLabel: {
+      marginLeft: 10,
+      color: theme.primaryTextColor,
+    },
+    toggleIcon: {
+      marginTop: 8,
+    },
+  });

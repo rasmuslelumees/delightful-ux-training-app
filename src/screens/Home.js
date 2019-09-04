@@ -12,13 +12,14 @@ import ScreensToggleIcon from '../components/ScreensToggleIcon';
 import SongList from '../components/SongList';
 import Player from '../components/Player';
 import songs from '../../assets/topTracks.json';
+import { withTheme } from '../utils/theming';
 
 class Home extends React.Component {
   state = {
     currentSong: songs.tracks[0],
     currentSongDuration: 10,
     songs: songs.tracks,
-    showLoginScreen: false,
+    showLoginScreen: true,
   };
 
   handleSongPress = currentSong => {
@@ -51,13 +52,16 @@ class Home extends React.Component {
   };
 
   render() {
+    const { theme } = this.props;
+    const styles = computeStyles(theme);
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.content}>
-          {/* <ScreensToggleIcon
+          <ScreensToggleIcon
+            style={styles.toggleIcon}
             color={'#131313'}
             onPress={this.handleLoginScreenToggle}
-          /> */}
+          />
           <StatusBar barStyle={'dark-content'} />
           <Player
             currentSong={this.state.currentSong}
@@ -83,15 +87,20 @@ class Home extends React.Component {
   }
 }
 
-export default Home;
+export default withTheme(Home);
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingTop: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight,
-    backgroundColor: '#FFF',
-  },
-  content: {
-    flex: 1,
-  },
-});
+/* eslint-disable react-native/no-unused-styles */
+const computeStyles = theme =>
+  StyleSheet.create({
+    container: {
+      flex: 1,
+      paddingTop: Platform.OS === 'ios' ? 0 : StatusBar.currentHeight,
+      backgroundColor: theme.backgroundColor,
+    },
+    content: {
+      flex: 1,
+    },
+    toggleIcon: {
+      marginTop: 8,
+    },
+  });
