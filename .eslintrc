@@ -2,6 +2,6 @@
   "extends": ["@callstack"],
   "rules": {
     "react-native/no-color-literals": "off",
-    "import/no-extraneous-dependencies": "off"
+    "import/no-extraneous-dependencies": "off",
   }
 }
