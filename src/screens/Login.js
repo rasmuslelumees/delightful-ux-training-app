@@ -63,13 +63,17 @@ class Login extends React.Component {
           shouldClose
         />
         <StatusBar barStyle={isLightTheme ? 'dark-content' : 'light-content'} />
-        <Text style={styles.header}>{i18n.t('header')}</Text>
+        <Text style={styles.header} accessibilityRole="text">
+          {i18n.t('header')}
+        </Text>
         <View style={styles.inputGroup}>
           <View style={[styles.row, styles.inputRow]}>
             <Ionicons
               name="md-person"
               size={26}
               color={theme.primaryTextColor}
+              accessibilityElementsHidden={true}
+              importantForAccessibility="no"
             />
             <TextInput
               style={styles.input}
@@ -78,7 +82,7 @@ class Login extends React.Component {
               autoCapitalize="none"
               keyboardType="email-address"
               placeholder={i18n.t('email')}
-              placeholderTextColor={theme.primaryTextColor}
+              placeholderTextColor={theme.secondaryTextColor}
             />
           </View>
           <View style={[styles.row, styles.inputRow]}>
@@ -90,7 +94,7 @@ class Login extends React.Component {
               returnKeyType="go"
               autoCapitalize="none"
               placeholder={i18n.t('password')}
-              placeholderTextColor={theme.primaryTextColor}
+              placeholderTextColor={theme.secondaryTextColor}
               secureTextEntry
             />
           </View>
