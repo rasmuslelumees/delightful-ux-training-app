@@ -10,13 +10,14 @@ const {
   startClock,
 } = Animated;
 
-const DEFAULT_DURATION = 200;
+const DEFAULT_DURATION = 300;
 
-export function runLinearTiming({
+export function runAnimationTiming({
   clock,
   toValue,
   position = new Value(0),
   duration = DEFAULT_DURATION,
+  easing = Easing.linear,
 }) {
   const state = {
     finished: new Value(0),
@@ -28,7 +29,7 @@ export function runLinearTiming({
   const config = {
     toValue,
     duration,
-    easing: Easing.linear,
+    easing,
   };
 
   return block([

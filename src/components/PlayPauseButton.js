@@ -1,9 +1,9 @@
 import React from 'react';
 import { StyleSheet, TouchableWithoutFeedback, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import Animated from 'react-native-reanimated';
+import Animated, { Easing } from 'react-native-reanimated';
 
-import { runLinearTiming } from '../utils/animationHelpers';
+import { runAnimationTiming } from '../utils/animationHelpers';
 
 const { Clock, block, concat, interpolate } = Animated;
 
@@ -11,7 +11,11 @@ class PlayPauseButton extends React.Component {
   clock = new Clock();
 
   pauseOpacity = block([
-    runLinearTiming({ clock: this.clock, toValue: this.props.isPlaying }),
+    runAnimationTiming({
+      clock: this.clock,
+      toValue: this.props.isPlaying,
+      easing: Easing.elastic(1.1),
+    }),
   ]);
 
   playOpacity = interpolate(this.pauseOpacity, {

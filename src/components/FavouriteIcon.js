@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, TouchableWithoutFeedback } from 'react-native';
 import iconHeart from '../../assets/icon_heart.png';
-import Animated from 'react-native-reanimated';
-import { runLinearTiming } from '../utils/animationHelpers';
+import Animated, { Easing } from 'react-native-reanimated';
+import { runAnimationTiming } from '../utils/animationHelpers';
 
 const { Value, Clock } = Animated;
 
@@ -11,11 +11,12 @@ const DEFAULT_BUTTON_OPACITY = 0.2;
 class FavouriteIcon extends React.Component {
   clock = new Clock();
   toValue = new Value(DEFAULT_BUTTON_OPACITY);
-  opacity = runLinearTiming({
+  opacity = runAnimationTiming({
     clock: this.clock,
     toValue: this.toValue,
     position: new Value(DEFAULT_BUTTON_OPACITY),
-    duration: 400,
+    duration: 300,
+    easing: Easing.elastic(0.7),
   });
 
   componentDidUpdate(prevProps) {
