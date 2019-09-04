@@ -37,7 +37,6 @@ const SongList = ({
         data={songs}
         renderItem={renderRow}
         keyExtractor={item => item.track.id}
-        bounces={false}
         contentContainerStyle={styles.listContainer}
         onScroll={event([
           {

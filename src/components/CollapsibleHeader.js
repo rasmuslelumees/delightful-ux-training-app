@@ -8,6 +8,11 @@ const { interpolate, Extrapolate, multiply } = Animated;
 
 class CollapsibleHeader extends React.Component {
   interpolatedTranslateY = interpolate(this.props.scrollY, {
+    inputRange: [-100, 0, 130],
+    outputRange: [100, 0, 130],
+  });
+
+  interpolatedTranslateYShadow = interpolate(this.props.scrollY, {
     inputRange: [0, 130],
     outputRange: [0, 130],
     extrapolate: Extrapolate.CLAMP,
@@ -20,9 +25,8 @@ class CollapsibleHeader extends React.Component {
   });
 
   interpolatedScale = interpolate(this.props.scrollY, {
-    inputRange: [0, 130],
-    outputRange: [1, 0.6],
-    extrapolate: Extrapolate.CLAMP,
+    inputRange: [-100, 0, 130],
+    outputRange: [1.5, 1, 0.6],
   });
 
   render() {
@@ -39,7 +43,7 @@ class CollapsibleHeader extends React.Component {
     };
 
     const shadowContainerAnimationStyles = {
-      height: this.interpolatedTranslateY,
+      height: this.interpolatedTranslateYShadow,
     };
 
     return (
