@@ -11,6 +11,7 @@ const {
   SpringUtils,
   spring,
   decay,
+  call,
 } = Animated;
 
 const DEFAULT_DURATION = 300;
@@ -21,6 +22,7 @@ export function runAnimationTiming({
   position = new Value(0),
   duration = DEFAULT_DURATION,
   easing = Easing.linear,
+  onFinish = () => {},
 }) {
   const state = {
     finished: new Value(0),
@@ -44,7 +46,7 @@ export function runAnimationTiming({
       startClock(clock),
     ]),
     timing(clock, state, config),
-    cond(state.finished, [stopClock(clock)]),
+    cond(state.finished, [stopClock(clock), call([state.finished], onFinish)]),
     state.position,
   ]);
 }
@@ -83,7 +85,15 @@ export function runSpring(clock, position) {
     time: new Value(0),
   };
 
-  const config = SpringUtils.makeDefaultConfig();
+  const config = {
+    stiffness: new Value(150),
+    mass: new Value(1),
+    damping: new Value(16),
+    overshootClamping: false,
+    restSpeedThreshold: 0.001,
+    restDisplacementThreshold: 0.001,
+    toValue: new Value(0),
+  };
 
   return [
     cond(clockRunning(clock), 0, [

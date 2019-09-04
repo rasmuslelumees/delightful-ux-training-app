@@ -20,7 +20,6 @@ const {
   stopClock,
   cond,
   interpolate,
-  Extrapolate,
   greaterThan,
 } = Animated;
 
@@ -59,6 +58,7 @@ class SongItem extends React.Component {
               clock,
               toValue: new Value(0),
               position: this.height,
+              onFinish: this.handleHideEnd,
             }),
             runSwipeDecay(swipeClock, dragX, dragVelocityX),
           ],
@@ -68,9 +68,9 @@ class SongItem extends React.Component {
     );
 
     this.opacity = interpolate(this.height, {
-      inputRange: [0, ROW_HEIGHT],
-      outputRange: [0, 1],
-      extrapolate: Extrapolate.CLAMP,
+      inputRange: [0, ROW_HEIGHT / 2, ROW_HEIGHT],
+      outputRange: [0, 0, 1],
+      // extrapolate: Extrapolate.CLAMP,
     });
   }
 
@@ -136,7 +136,6 @@ export default SongItem;
 const styles = StyleSheet.create({
   container: {
     overflow: 'hidden',
-    height: ROW_HEIGHT,
     backgroundColor: '#fff',
   },
   song: {
