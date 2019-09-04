@@ -1,14 +1,52 @@
 import React from 'react';
 import { StyleSheet, View, Text, Image } from 'react-native';
+import Animated from 'react-native-reanimated';
+
 import { NAV_BAR_HEIGHT } from '../utils/constants';
 
+const { interpolate, Extrapolate, multiply } = Animated;
+
 class CollapsibleHeader extends React.Component {
+  interpolatedTranslateY = interpolate(this.props.scrollY, {
+    inputRange: [0, 130],
+    outputRange: [0, 130],
+    extrapolate: Extrapolate.CLAMP,
+  });
+
+  interpolatedOpacity = interpolate(this.props.scrollY, {
+    inputRange: [0, 200],
+    outputRange: [1, 0],
+    extrapolate: Extrapolate.CLAMP,
+  });
+
+  interpolatedScale = interpolate(this.props.scrollY, {
+    inputRange: [0, 130],
+    outputRange: [1, 0.6],
+    extrapolate: Extrapolate.CLAMP,
+  });
+
   render() {
     const { currentSong } = this.props;
 
+    const imageContainerAnimationStyles = {
+      opacity: this.interpolatedOpacity,
+      transform: [
+        {
+          translateY: multiply(this.interpolatedTranslateY, 0.3),
+          scale: this.interpolatedScale,
+        },
+      ],
+    };
+
+    const shadowContainerAnimationStyles = {
+      height: this.interpolatedTranslateY,
+    };
+
     return (
       <View style={styles.container}>
-        <View style={styles.imageContainer}>
+        <Animated.View
+          style={[styles.imageContainer, imageContainerAnimationStyles]}
+        >
           <Image
             source={{
               uri: currentSong.track.album.images[0].url,
@@ -18,8 +56,10 @@ class CollapsibleHeader extends React.Component {
           <Text style={styles.artistName}>
             {currentSong.track.artists[0].name}
           </Text>
-        </View>
-        <View style={styles.shadowContainer} />
+        </Animated.View>
+        <Animated.View
+          style={[styles.shadowContainer, shadowContainerAnimationStyles]}
+        />
       </View>
     );
   }
@@ -50,7 +90,7 @@ const styles = StyleSheet.create({
   },
   artistName: {
     color: '#131313',
-    padding: 15,
+    padding: 16,
     fontSize: 20,
   },
   imageContainer: {
