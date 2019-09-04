@@ -37,20 +37,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: '#fff',
     padding: 15,
+    zIndex: 5,
+    borderBottomColor: '#edf1f5',
     borderBottomWidth: 1,
-    borderBottomColor: '#fff',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-
-    elevation: 5,
   },
   text: {
     color: '#131313',
     fontSize: 15,
+    fontWeight: '500',
   },
 });

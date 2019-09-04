@@ -54,10 +54,10 @@ class Home extends React.Component {
     return (
       <SafeAreaView style={styles.container}>
         <View style={styles.content}>
-          <ScreensToggleIcon
+          {/* <ScreensToggleIcon
             color={'#131313'}
             onPress={this.handleLoginScreenToggle}
-          />
+          /> */}
           <StatusBar barStyle={'dark-content'} />
           <Player
             currentSong={this.state.currentSong}

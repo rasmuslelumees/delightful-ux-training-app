@@ -83,9 +83,9 @@ const styles = StyleSheet.create({
     bottom: 0,
     position: 'absolute',
     elevation: 16,
-    shadowColor: 'black',
+    shadowColor: '#1c1c1c',
     shadowOffset: { width: 0, height: 5 },
-    shadowOpacity: 0.5,
+    shadowOpacity: 0.3,
     shadowRadius: 20,
   },
   artistName: {
