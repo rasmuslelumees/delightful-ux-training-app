@@ -8,6 +8,9 @@ const {
   timing,
   set,
   startClock,
+  SpringUtils,
+  spring,
+  decay,
 } = Animated;
 
 const DEFAULT_DURATION = 300;
@@ -46,6 +49,51 @@ export function runAnimationTiming({
   ]);
 }
 
-export function runSwipeDecay() {}
+export function runSwipeDecay(clock, value, velocity) {
+  const state = {
+    finished: new Value(0),
+    velocity: velocity,
+    position: value,
+    time: new Value(0),
+  };
 
-export function runSpring() {}
+  const config = {
+    deceleration: new Value(0.99),
+  };
+
+  return [
+    cond(clockRunning(clock), 0, [
+      set(state.finished, 0),
+      set(state.velocity, velocity),
+      set(state.position, value),
+      set(config.deceleration, 0.99),
+      startClock(clock),
+    ]),
+    decay(clock, state, config),
+    cond(state.finished, [stopClock(clock)]),
+    state.position,
+  ];
+}
+
+export function runSpring(clock, position) {
+  const state = {
+    finished: new Value(0),
+    velocity: new Value(0),
+    position: new Value(0),
+    time: new Value(0),
+  };
+
+  const config = SpringUtils.makeDefaultConfig();
+
+  return [
+    cond(clockRunning(clock), 0, [
+      set(state.finished, 0),
+      set(state.velocity, 0),
+      set(state.position, position),
+      startClock(clock),
+    ]),
+    spring(clock, state, config),
+    cond(state.finished, [stopClock(clock)]),
+    state.position,
+  ];
+}
