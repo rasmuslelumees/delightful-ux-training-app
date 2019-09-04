@@ -15,8 +15,8 @@ class FavouriteIcon extends React.Component {
     clock: this.clock,
     toValue: this.toValue,
     position: new Value(DEFAULT_BUTTON_OPACITY),
-    duration: 300,
-    easing: Easing.elastic(0.7),
+    duration: 200,
+    easing: Easing.linear,
   });
 
   componentDidUpdate(prevProps) {
